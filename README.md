@@ -1,5 +1,5 @@
 # quantumkillersudoku
-Exploration of using adiabatic quantum computing to solving killer sudoku.
+Exploration of using adiabatic quantum computing to solve Killer Sudoku.
 
 D-Wave Systems (https://www.dwavesys.com/) include among their various examples, the use of a Binary Quadratic Model (BQM) to solve typical Sudoku problems (https://github.com/dwave-examples/sudoku).
 
