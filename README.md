@@ -11,3 +11,20 @@ The specific difference between standard Sudoku and Killer Sudoku is that, while
 This difference has implications for the types of constraint that appear in the associated BQM: constraints for the standard Sudoku include ones which map values to cells, where such are known, whereas the Killer variant must include constraints appropriate to the possible contents of cages.
 
 In order to limit the complexity of the problem, only Killer boards with cages of size 2 or 3 cells are considered. 
+
+## Usage
+To use your own Killer Sudoku board:
+
+python killer.py board.txt
+
+or to use a default samples:
+
+python killer.py 9
+
+for the sampel 9 x 9 puzzle
+
+or 
+
+python killer.py 4
+
+for the sample 4 x 4 puzzle.
