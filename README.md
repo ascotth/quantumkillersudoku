@@ -56,7 +56,7 @@ In this sample, the lines 1 - 3 and 5 describe cages having 3 cells each and sum
 cages containing 2 cells each, each summing to 5. The 16 cells of the 4 x 4 board are included in one and only one line (as cages do not overlap, 
 and all cells are included in a cage).
 
-It's worth noting that this quite simple puzzle has 3 linear cages on lines 2, 3 and 6, with L shaped cages on lines 1, 2 and 5.
+It's worth noting that this quite simple puzzle has 3 linear cages on lines 3, 4 and 6, with L shaped cages on lines 1, 2 and 5.
 
 
 ## A Note on Solutions
