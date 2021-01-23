@@ -216,7 +216,6 @@ def allocate_numbers(cage, perms):
                 values to cells in the cage.
     """
     values = []
-    print(cage)
     
     cells = cage.cells
     
@@ -644,15 +643,14 @@ def handle_args():
         option = sys.argv[1]
         if option in ['4','9']:
             filename = f'easy_{option}.txt'
-            print(f'Using sample {filename} of size {option} x {option}.\n\n')
+            print(f'\nUsing sample {filename} of size {option} x {option}.\n\n')
         elif len(option) < 3:
             ok = False
         else:
             filename = option
-            print(f'Attempting to use {filename} as input board.\n\n')
+            print(f'\nAttempting to use {filename} as input board.\n\n')
     else:
         ok = False
-        print('Usage is \npython killer.py filename or \npython killer.py 4 (or 9)')
         
     return ok, filename
 
