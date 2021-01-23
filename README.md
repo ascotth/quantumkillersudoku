@@ -52,9 +52,9 @@ To make this more explicit, here is the contents of the easy_4.txt sample file:
 2,2 3,2 3,3 9  
 3,0 3,1 5  
 
-In this sample, the lines 1 - 3 and 5 describe cages having 3 cells each and summing to 6, 8, 7 and 9 respectively,  
-and lines 4 and 6 describe cages containing 2 cells each, each summing to 5. The 16 cells of the 4 x 4 board are included  
-in one and only one line (as cages do not overlap, and all cells are included in a cage).
+In this sample, the lines 1 - 3 and 5 describe cages having 3 cells each and summing to 6, 8, 7 and 9 respectively,  and lines 4 and 6 describe 
+cages containing 2 cells each, each summing to 5. The 16 cells of the 4 x 4 board are included in one and only one line (as cages do not overlap, 
+and all cells are included in a cage).
 
 It's worth noting that this quite simple puzzle has 3 linear cages on lines 2, 3 and 6, with L shaped cages on lines 1, 2 and 5.
 
