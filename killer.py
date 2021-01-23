@@ -468,13 +468,48 @@ def add_basic_constraints(poly, size):
 
     return bqm
 
+def cell_desc(cell):
+    return str(cell.r) + ',' + str(cell.c)
+
+def cage_desc(cage):
+    coords = [cell_desc(cell) for cell in cage.cells]
+    cell_str = ' '.join(coords)
+    return f'Cells {cell_str} should sum to {cage.target}'
+
+def check_cage(cage, board):
+    """Compares the cage target with the sum of the cells.
     
-def check_solution(board):
+    Using the board values, compute the sum of the cage's cells
+    and compare with the required target value, returning a
+    boolean to indicate success or not and a message
+    describing the failure if any.
+
+    Args:
+        cage(Inputcage): the cells and target for a specific cage
+        board(list): a list of lists containing the cells values
+
+    Returns:
+        (bool): True if success, False otherwise
+        (str/None): if failure, a brief explanation of the failed sum
+    """
+    total = 0
+    for cell in cage.cells:
+        total += board[cell.r][cell.c]
+    message = None
+    ok = (total == cage.target)
+
+    if not ok:
+        desc = cage_desc(cage)
+        message = f'{desc} but actual total is {total}'
+    return ok, message
+    
+def check_solution(board, cages):
     """Verify that the board satisfies the Sudoku constraints.
 
     Args:
       board(list of lists): list contains 'n' lists, where each of the 'n'
         lists contains 'n' digits. 
+      cages(list): the list of Inputcages used to capture the puzzle.
     """
     n = len(board)        # Number of rows/columns
     m = int(math.sqrt(n))  # Number of subsquare rows/columns
@@ -498,18 +533,24 @@ def check_solution(board):
     subsquare_coords = [(i, j) for i in range(m) for j in range(m)]
     for r in range(m):
         for c in range(m):
-            subsquare = [matrix[i + r * m][j + c * m] for i, j
+            subsquare = [board[i + r * m][j + c * m] for i, j
                          in subsquare_coords]
             if set(subsquare) != unique_digits:
                 sub_probs.append(subsquare)
+    cage_probs = []
+    for cage in cages:
+        ok, message = check_cage(cage, board)
+        if not ok:
+            cage_probs.append(message)
             
-    if len(row_probs) + len(col_probs) + len(sub_probs) == 0:
+    if len(row_probs) + len(col_probs) + len(sub_probs) + len(cage_probs) == 0:
         print("Correct solution")
     else:
         print("Sadly, not quite right - see the problems below:")
-        show_probs('rows',row_probs)
-        show_probs('columns',col_probs)
-        show_probs('subsquares',sub_probs)
+        show_probs('Rows',row_probs)
+        show_probs('Columns',col_probs)
+        show_probs('Subsquares',sub_probs)
+        show_probs('Cages',cage_probs)
         
 def show_probs(name, probs):
     if len(probs) > 0:
@@ -517,12 +558,24 @@ def show_probs(name, probs):
         for p in probs:
             print(p)
         
-def create_poly(lines, size):
+def create_poly(cages, size):
+    """Populates a polynomial representing the cage constraints.
+    
+    Creates all possible allocations of values to cells which
+    satisfy the cage totals, and populates a polynomial in the form
+    of a dictionary to hold these constaints.
+    
+    Args:
+        cages(list): the Inputcages containing cell and target values
+        size(int): the size of the puzzle (4 or 9)
+        
+    Returns:
+        poly(dict): a dictionary keyed on variable names with their coefficients as values
+    """
     side = int(math.sqrt(size))  
 
     perms = create_perms()
     patterns = generate_patterns(size)
-    cages = process_lines(lines)
     board = make_board(cages, patterns, side)
     
     poly = {}
@@ -573,8 +626,17 @@ def create_board(result, size):
     return board
 
 
-def handle_input():
-   # Either a filename or a board size (4 or 9) may be passed
+def handle_args():
+    """Determines a puzzle filename from the passed argument.
+    
+    If no argument is passed, a usage message is displayed.
+    
+    If '4' or '9' are provided, the sample puzzle of that size is used. 
+    
+    Otherwise, the first arg is assumed to be a puzzle filename unless it is less than 3 characters long.
+    
+    """
+   # Either a filename or a board size (4 or 9) are accepted.
     ok = True
     filename = None
     
@@ -590,6 +652,7 @@ def handle_input():
             print(f'Attempting to use {filename} as input board.\n\n')
     else:
         ok = False
+        print('Usage is \npython killer.py filename or \npython killer.py 4 (or 9)')
         
     return ok, filename
 
@@ -601,7 +664,7 @@ def main():
                         of the puzzle. One cage per line.
     """
 
-    ok, filename = handle_input()
+    ok, filename = handle_args()
     if not ok:
         print('Usage: \n   python killer.py <board size> (valid board sizes are 4 and 9) or \n   python killer.py <filename> (where the board is included in the named file).\n\n')
         return
@@ -617,7 +680,7 @@ def main():
     
     board = create_board(result, size)
     
-    check_solution(board)
+    check_solution(board, cages)
 
 
 if __name__ == "__main__":
