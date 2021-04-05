@@ -447,7 +447,9 @@ def add_basic_constraints(poly, size):
             col_bqm = combinations(col_nodes, 1)
             bqm.update(col_bqm)
             
-    # Constraint: Each subsquare must contain all of the digits once
+    # Constraint: Sub-squares cannot have duplicates
+    # Build indices of a basic subsquare
+    subsquare_indices = [(row, col) for row in range(size) for col in range(size)]
     for r in range(size):
         for c in range(size):
             for digit in digits:
