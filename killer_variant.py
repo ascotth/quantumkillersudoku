@@ -448,12 +448,12 @@ def add_basic_constraints(poly, size):
             bqm.update(col_bqm)
             
     # Constraint: Each subsquare must contain all of the digits once
-    for r in range(m):
-        for c in range(m):
+    for r in range(size):
+        for c in range(size):
             for digit in digits:
                 # Shifts for moving subsquare inside sudoku matrix
-                row_shift = r * m
-                col_shift = c * m
+                row_shift = r * size
+                col_shift = c * size
 
                 # Build the labels for a subsquare
                 subsquare = [get_label(row + row_shift, col + col_shift, digit)
