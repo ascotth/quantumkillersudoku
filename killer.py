@@ -340,16 +340,16 @@ def read_puzzle(path):
         content = f.readlines()
 
     cages = [] 
-    size = 0
+    area = 0
     
     for line in content:
         print(line)
         inputcage = parse_line(line)
-        size += len(inputcage.cells)
+        area += len(inputcage.cells)
         cages.append(inputcage)
         
-    print(f'\nPuzzle has {size} cells.\n\n')
-    
+    print(f'\nPuzzle has {area} cells.\n\n')
+    size = int(math.sqrt(area))
     return cages, size
            
 def make_cage(incage, patterns, side):

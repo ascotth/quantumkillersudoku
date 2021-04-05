@@ -329,25 +329,25 @@ def parse_line(line):
     
 
 def read_puzzle(path):
-    """Returns a list of lists containing the contents of the input text file.
+     """Returns a list of lists containing the contents of the input text file.
 
     """
     with open(path, "r") as f:
         content = f.readlines()
 
     cages = [] 
-    size = 0
+    area = 0
     
     for line in content:
         print(line)
         inputcage = parse_line(line)
-        size += len(inputcage.cells)
+        area += len(inputcage.cells)
         cages.append(inputcage)
         
-    print(f'\nPuzzle has {size} cells.\n\n')
+    print(f'\nPuzzle has {area} cells.\n\n')
+    size = int(math.sqrt(area))
+    return cages, size   
     
-    return cages, size
-           
 def make_cage(incage, patterns, side):
     """Creates a Cage using the input data, patterns and size of a subsquare.
     
