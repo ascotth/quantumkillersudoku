@@ -462,7 +462,7 @@ def add_basic_constraints(poly, size):
                 col_shift = c * size
 
                 # Build the labels for a subsquare
-                subsquare = [get_label(row + row_shift, col + col_shift, digit)
+                subsquare = [generate_variable(row + row_shift, col + col_shift, digit)
                              for row, col in subsquare_indices]
                 subsquare_bqm = combinations(subsquare, 1)
                 bqm.update(subsquare_bqm)
