@@ -453,13 +453,14 @@ def add_basic_constraints(poly, size):
             
     # Constraint: Sub-squares cannot have duplicates
     # Build indices of a basic subsquare
-    subsquare_indices = [(row, col) for row in range(size) for col in range(size)]
-    for r in range(size):
-        for c in range(size):
+    sub_size = int(math.sqrt(size))
+    subsquare_indices = [(row, col) for row in range(sub_size) for col in range(size)]
+    for r in range(sub_size):
+        for c in range(sub_size):
             for digit in digits:
                 # Shifts for moving subsquare inside sudoku matrix
-                row_shift = r * size
-                col_shift = c * size
+                row_shift = r * sub_size
+                col_shift = c * sub_size
 
                 # Build the labels for a subsquare
                 subsquare = [generate_variable(row + row_shift, col + col_shift, digit)
