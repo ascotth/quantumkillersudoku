@@ -450,7 +450,7 @@ def add_basic_constraints(poly, size):
     # Constraint: Sub-squares cannot have duplicates
     # Build indices of a basic subsquare
     sub_size = int(math.sqrt(size))
-    subsquare_indices = [(row, col) for row in range(sub_size) for col in range(size)]
+    subsquare_indices = [(row, col) for row in range(sub_size) for col in range(sub_size)]
     for r in range(sub_size):
         for c in range(sub_size):
             for digit in digits:
